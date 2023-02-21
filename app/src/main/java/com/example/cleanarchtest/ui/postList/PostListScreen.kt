@@ -6,18 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.cleanarchtest.util.UiState
 import com.example.domain.model.Post
-import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun PostListScreen(viewModel: PostListVM = getViewModel()) {
-
+fun PostListScreen(uiState: UiState<List<Post>>) {
     Column(modifier = Modifier.fillMaxSize()) {
-        when (val uiState = viewModel.state.collectAsState().value) {
+        when (uiState) {
             is UiState.Loading -> {
                 LoadingComponent()
             }
