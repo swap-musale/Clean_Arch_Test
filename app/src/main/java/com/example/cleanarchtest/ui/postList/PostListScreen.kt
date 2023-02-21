@@ -1,5 +1,6 @@
 package com.example.cleanarchtest.ui.postList
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.cleanarchtest.util.UiState
 import com.example.domain.model.Post
 import org.koin.androidx.compose.getViewModel
 
@@ -22,8 +24,11 @@ fun PostListScreen(viewModel: PostListVM = getViewModel()) {
             is UiState.EmptyList -> {
                 EmptyPostListComponent()
             }
-            is UiState.PostListState -> {
+            is UiState.Success -> {
                 ShowPostListView(uiState.data)
+            }
+            is UiState.Error -> {
+                Log.d("TAG", "PostListScreen: ${uiState.exception.localizedMessage}")
             }
         }
     }

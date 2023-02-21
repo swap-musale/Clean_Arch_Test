@@ -1,21 +1,18 @@
-package com.example.data.di
+package com.example.cleanarchtest.di
 
-import Constants
+import com.example.cleanarchtest.util.Constants
 import com.example.data.BuildConfig
-import com.example.data.repository.PostRepositoryImpl
 import com.example.data.source.PostService
-import com.example.domain.repository.PostRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-val DataModule = module {
+val NetworkModule = module {
     single { provideOkHttpClient() }
     single { provideRetrofit(get()) }
     factory { providePostService(get()) }
-    single<PostRepository> { PostRepositoryImpl(get()) }
 }
 
 private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
