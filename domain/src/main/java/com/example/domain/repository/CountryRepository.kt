@@ -2,6 +2,6 @@ package com.example.domain.repository
 
 import com.example.domain.model.Post
 
-interface ApolloCountryRepository {
+interface CountryRepository {
     suspend fun getCountries(): List<Post>
 }

@@ -1,5 +1,6 @@
 package com.example.cleanarchtest.di
 
+import com.apollographql.apollo3.ApolloClient
 import com.example.cleanarchtest.util.Constants
 import com.example.data.BuildConfig
 import com.example.data.source.PostService
@@ -12,12 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 val NetworkModule = module {
     single { provideOkHttpClient() }
     single { provideRetrofit(get()) }
+    single { provideApolloClient() }
     factory { providePostService(get()) }
-}
-
-private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-    return HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
-        .setLevel(HttpLoggingInterceptor.Level.BODY)
 }
 
 fun provideOkHttpClient() = OkHttpClient
@@ -27,11 +24,22 @@ fun provideOkHttpClient() = OkHttpClient
     }
     .build()
 
+private fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+    return HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
+        .setLevel(HttpLoggingInterceptor.Level.BODY)
+}
+
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create()).build()
+}
+
+fun provideApolloClient(): ApolloClient {
+    return ApolloClient.Builder()
+        .serverUrl(Constants.GRAPH_QL_BASE_URL)
+        .build()
 }
 
 fun providePostService(retrofit: Retrofit): PostService =
