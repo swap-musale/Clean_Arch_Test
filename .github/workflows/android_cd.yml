@@ -24,11 +24,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-#      - name: Bump version code
-#        uses: chkfung/android-version-actions@v1.2
-#        with:
-#          gradlePath: app/build.gradle.kts
-#          versionCode: ${{github.run_number}}
+      #      - name: Bump version code
+      #        uses: chkfung/android-version-actions@v1.2
+      #        with:
+      #          gradlePath: app/build.gradle.kts
+      #          versionCode: ${{github.run_number}}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -49,13 +49,13 @@ jobs:
 
       - name: Create and push tag
         run: |
-            git config --global user.email "swapnil.musale@mutualmobile.com"
-            git config --global user.name "$GITHUB_ACTOR"
-            
-            git tag -a $TAG -m "Release v$TAG"
-            git push origin $TAG
+          git config --global user.email "swapnil.musale@mutualmobile.com"
+          git config --global user.name "$GITHUB_ACTOR"
+          
+          git tag -a $TAG -m "Release v$TAG"
+          git push origin $TAG
           env:
-            TAG: ${{ github.event.inputs.versionName }}
+          TAG: ${{ github.event.inputs.versionName }}
 
       - name: Create Release on GitHub
         id: create_release
